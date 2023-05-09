@@ -1,1 +1,1 @@
-# gemini-hlsw-migration-validator-action
+# migration-validator-action
