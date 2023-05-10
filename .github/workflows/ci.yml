@@ -29,7 +29,9 @@ jobs:
         with:
           ref: test
           fetch-depth: 0
-      - run: git merge --no-ff origin/${{ matrix.test }}
+      - run: |
+          git merge --no-commit --no-ff origin/${{ matrix.test }}
+          git commit --author="${GITHUB_ACTOR} <${GITHUB_ACTOR}@users.noreply.github.com>"
       - uses: jenseng/dynamic-uses@v1
         with:
           uses: ${{ github.repository }}@${{ github.sha }}
@@ -49,7 +51,9 @@ jobs:
         with:
           ref: test
           fetch-depth: 0
-      - run: git merge --no-ff origin/${{ matrix.test }}
+      - run: |
+          git merge --no-commit --no-ff origin/${{ matrix.test }}
+          git commit --author="${GITHUB_ACTOR} <${GITHUB_ACTOR}@users.noreply.github.com>"
       - uses: jenseng/dynamic-uses@v1
         with:
           uses: ${{ github.repository }}@${{ github.sha }}
