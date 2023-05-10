@@ -24,6 +24,7 @@ jobs:
       matrix:
         test:
           - test-happy-path
+          - test-no-changes
     steps:
       - uses: actions/checkout@v3
         with:
