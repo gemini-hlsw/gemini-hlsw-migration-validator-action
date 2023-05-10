@@ -17,3 +17,40 @@ jobs:
       - uses: VirtusLab/scala-cli-setup@main
       - run: npm run build
       - run: git diff --quiet index.js
+  
+  test-happy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        test:
+          - test-happy-path
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: test
+      - run: git merge ${{ matrix.test }}
+      - uses: ${{ github.repository }}@${{ github.sha }}
+        with:
+          path: migrations
+
+  test-unhappy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        test:
+          - test-deletion
+          - test-edit
+          - test-out-of-order
+          - test-rename
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: test
+      - run: git merge ${{ matrix.test }}
+      - uses: ${{ github.repository }}@${{ github.sha }}
+        with:
+          path: migrations
+        continue-on-error: true
+        id: validate
+      - if: steps.validate.outcome == 'success'
+        run: exit 1
