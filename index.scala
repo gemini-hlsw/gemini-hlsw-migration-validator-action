@@ -42,7 +42,7 @@ object index extends IOApp.Simple:
       .filterNot(_.isEmpty)
       .map(_.split("\\s+").toList)
       .evalMap {
-        case List(status, path) => IO.pure(Path(path))
+        case List(status, path) if status == "A" => IO.pure(Path(path))
         case l => IO.raiseError(new RuntimeException(s"Invalid diff: $l"))
       }
       .compile
