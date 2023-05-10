@@ -58,7 +58,10 @@ object index extends IOApp.Simple:
         s"Added migrations are not strictly increasing:\n${additions.mkString("\n")}"
       )
     }
-    _ <- IO.println(
-      s"Migrations are valid:\n${additions.map("- " + _).mkString("\n")}"
-    )
+    _ <-
+      if additions.nonEmpty then
+        IO.println(
+          s"Added migrations are valid:\n${additions.map("- " + _).mkString("\n")}"
+        )
+      else IO.println("No changes to migrations")
   yield ()
