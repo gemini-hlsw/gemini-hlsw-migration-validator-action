@@ -1,0 +1,7 @@
+{
+  "name": "migration-validator-action",
+  "main": "index.js",
+  "scripts": {
+    "build": "scala-cli --power package -f index.scala"
+  }
+}

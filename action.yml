@@ -1,0 +1,9 @@
+name: 'Validation Migration'
+description: 'Validate migration files'
+inputs:
+  path:
+    description: 'Path to migration files'
+    required: true
+runs:
+  using: 'node16'
+  main: 'index.js'
