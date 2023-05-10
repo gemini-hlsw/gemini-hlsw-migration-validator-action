@@ -45,6 +45,7 @@ jobs:
         test:
           - test-deletion
           - test-edit
+          - test-modify-latest
           - test-out-of-order
           - test-rename
     steps:
