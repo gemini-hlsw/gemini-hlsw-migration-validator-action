@@ -38,7 +38,7 @@ object index extends IOApp.Simple:
       .flatMap(_.stdout)
       .through(fs2.text.utf8.decode)
       .through(fs2.text.lines)
-      .map(_.split(" +").toList)
+      .map(_.split("\\s+").toList)
       .evalMap {
         case List(status, path) => IO.pure(Path(path))
         case l => IO.raiseError(new RuntimeException(s"Invalid diff: $l"))
