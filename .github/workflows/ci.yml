@@ -31,7 +31,7 @@ jobs:
           fetch-depth: 0
       - run: git merge --no-ff origin/${{ matrix.test }}
         env:
-          EMAIL: ${{ github.actor }}@users.noreply.github.com
+          EMAIL: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
       - uses: jenseng/dynamic-uses@v1
         with:
           uses: ${{ github.repository }}@${{ github.sha }}
@@ -53,7 +53,7 @@ jobs:
           fetch-depth: 0
       - run: git merge --no-ff origin/${{ matrix.test }}
         env:
-          EMAIL: ${{ github.actor }}@users.noreply.github.com
+          EMAIL: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
       - uses: jenseng/dynamic-uses@v1
         with:
           uses: ${{ github.repository }}@${{ github.sha }}
