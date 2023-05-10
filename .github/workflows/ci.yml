@@ -29,9 +29,9 @@ jobs:
         with:
           ref: test
           fetch-depth: 0
-      - run: git merge --no-ff origin/${{ matrix.test }}
-        env:
-          EMAIL: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+      - run: |
+          git config user.name "${{ github.actor }}"
+          git merge --no-ff origin/${{ matrix.test }}
       - uses: jenseng/dynamic-uses@v1
         with:
           uses: ${{ github.repository }}@${{ github.sha }}
@@ -51,9 +51,9 @@ jobs:
         with:
           ref: test
           fetch-depth: 0
-      - run: git merge --no-ff origin/${{ matrix.test }}
-        env:
-          EMAIL: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+      - run: |
+          git config user.name "${{ github.actor }}"
+          git merge --no-ff origin/${{ matrix.test }}
       - uses: jenseng/dynamic-uses@v1
         with:
           uses: ${{ github.repository }}@${{ github.sha }}
