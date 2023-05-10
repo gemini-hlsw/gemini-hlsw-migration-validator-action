@@ -29,7 +29,7 @@ jobs:
         with:
           ref: test
       - run: git merge ${{ matrix.test }}
-      - uses: ${{ github.repository }}@${{ github.sha }}
+      - uses: gemini-hlsw/migration-validator-action@${{ github.sha }}
         with:
           path: migrations
 
@@ -47,7 +47,7 @@ jobs:
         with:
           ref: test
       - run: git merge ${{ matrix.test }}
-      - uses: ${{ github.repository }}@${{ github.sha }}
+      - uses: gemini-hlsw/migration-validator-action@${{ github.sha }}
         with:
           path: migrations
         continue-on-error: true
