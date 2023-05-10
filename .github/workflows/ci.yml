@@ -30,7 +30,7 @@ jobs:
           ref: test
           fetch-depth: 0
       - run: |
-          git merge --no-commit --no-ff origin/${{ matrix.test }}
+          git merge --no-commit origin/${{ matrix.test }}
           git commit --author="${GITHUB_ACTOR} <${GITHUB_ACTOR}@users.noreply.github.com>"
       - uses: jenseng/dynamic-uses@v1
         with:
@@ -52,7 +52,7 @@ jobs:
           ref: test
           fetch-depth: 0
       - run: |
-          git merge --no-commit --no-ff origin/${{ matrix.test }}
+          git merge --no-commit origin/${{ matrix.test }}
           git commit --author="${GITHUB_ACTOR} <${GITHUB_ACTOR}@users.noreply.github.com>"
       - uses: jenseng/dynamic-uses@v1
         with:
