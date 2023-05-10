@@ -53,7 +53,7 @@ object index extends IOApp.Simple:
     additions <- getAdditions(path)
     _ <- IO.raiseWhen(!migrations.endsWith(additions)) {
       new RuntimeException(
-        s"Migration versions are not strictly increasing:\n${additions.mkString("\n")}"
+        s"Added migrations are not strictly increasing:\n${migrations.mkString("\n")}"
       )
     }
   yield ()
