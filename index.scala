@@ -4,6 +4,7 @@
 //> using dep "co.fs2::fs2-io::3.7.0-RC5"
 //> using jsModuleKind "common"
 
+import cats.Order.catsKernelOrderingForOrder
 import cats.data.*
 import cats.effect.*
 import cats.effect.std.*
@@ -19,7 +20,7 @@ object index extends IOApp.Simple:
   def getPath = getInput("path").map(_.foldMap(Path(_)))
 
   def getMigrations(path: Path) =
-    Files[IO].list(path).compile.toList
+    Files[IO].list(path).compile.toList.map(_.sorted)
 
   def getAdditions(path: Path) =
     Stream
@@ -46,6 +47,7 @@ object index extends IOApp.Simple:
       }
       .compile
       .toList
+      .map(_.sorted)
 
   def run = for
     path <- getPath
