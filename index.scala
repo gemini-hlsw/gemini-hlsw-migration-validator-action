@@ -38,6 +38,7 @@ object index extends IOApp.Simple:
       .flatMap(_.stdout)
       .through(fs2.text.utf8.decode)
       .through(fs2.text.lines)
+      .filterNot(_.isEmpty)
       .map(_.split("\\s+").toList)
       .evalMap {
         case List(status, path) => IO.pure(Path(path))
