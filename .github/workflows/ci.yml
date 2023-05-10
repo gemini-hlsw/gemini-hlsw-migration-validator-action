@@ -29,9 +29,10 @@ jobs:
         with:
           ref: test
       - run: git merge ${{ matrix.test }}
-      - uses: gemini-hlsw/migration-validator-action@${{ github.sha }}
+      - uses: jenseng/dynamic-uses@v1
         with:
-          path: migrations
+          uses: ${{ github.repository }}@${{ github.sha }}
+          with: '{ "path": "migrations" }'
 
   test-unhappy:
     runs-on: ubuntu-latest
@@ -47,9 +48,10 @@ jobs:
         with:
           ref: test
       - run: git merge ${{ matrix.test }}
-      - uses: gemini-hlsw/migration-validator-action@${{ github.sha }}
+      - uses: jenseng/dynamic-uses@v1
         with:
-          path: migrations
+          uses: ${{ github.repository }}@${{ github.sha }}
+          with: '{ "path": "migrations" }'
         continue-on-error: true
         id: validate
       - if: steps.validate.outcome == 'success'
