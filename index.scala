@@ -1,7 +1,7 @@
 //> using platform "js"
 //> using scala "3.2.2"
 //> using jsVersion "1.13.1"
-//> using dep "co.fs2::fs2-io::3.7.0-RC5"
+//> using toolkit "typelevel:0.0.10"
 //> using jsModuleKind "common"
 
 import cats.Order.catsKernelOrderingForOrder
