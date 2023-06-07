@@ -5,4 +5,5 @@
   uses: gemini-hlsw/migration-validator-action@main
   with:
     path: modules/service/src/main/resources/db/migration/
+  if: github.event_name == 'pull_request'
 ```
