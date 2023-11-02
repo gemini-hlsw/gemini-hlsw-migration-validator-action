@@ -30,6 +30,7 @@ object index extends IOApp.Simple:
           "--name-status",
           "-m",
           "-r",
+          "HEAD^1",
           "HEAD",
           path.toString
         ).spawn[IO]
