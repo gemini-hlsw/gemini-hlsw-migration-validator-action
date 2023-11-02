@@ -1,8 +1,6 @@
-//> using platform "js"
-//> using scala "3.2.2"
-//> using jsVersion "1.13.1"
-//> using toolkit "typelevel:0.0.10"
-//> using jsModuleKind "common"
+//> using platform js
+//> using toolkit typelevel:0.1.17
+//> using jsModuleKind common
 
 import cats.Order.catsKernelOrderingForOrder
 import cats.data.*
