@@ -48,11 +48,6 @@ object index extends IOApp.Simple:
       .toList
       .map(_.sorted)
 
-  def validateIncreasing(migrations: List[Path], additions: List[Path]) =
-    def getId(path: Path) = path.fileName.toString.split('_')(0)
-
-    def increasing = migrations.endsWith(additions)
-
   def run = for
     path <- getPath
     migrations <- getMigrations(path)
