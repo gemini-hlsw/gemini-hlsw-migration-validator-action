@@ -23,6 +23,9 @@ object index extends IOApp.Simple:
   def getAdditions(path: Path) =
     Stream
       .resource(
+        // HEAD is the (simulated) merge commit i.e. the result of merging this PR branch into the target branch
+        // HEAD^1 is the first parent of this merge commit i.e. the tip of target branch
+        // This command lists changes to migration files when comparing HEAD to HEAD^1 i.e. the changes introduced by this PR
         ProcessBuilder(
           "git",
           "diff-tree",
