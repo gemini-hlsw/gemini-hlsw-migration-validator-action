@@ -51,6 +51,7 @@ jobs:
           - test-modify-latest
           - test-out-of-order
           - test-rename
+          - test-conflicting
     steps:
       - uses: actions/checkout@v4
         with:
