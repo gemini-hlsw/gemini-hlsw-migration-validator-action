@@ -48,15 +48,35 @@ object index extends IOApp.Simple:
       .toList
       .map(_.sorted)
 
+  def validateIncreasing(migrations: List[Path], additions: List[Path]) =
+    def getId(path: Path) = path.fileName.toString.split('_')(0)
+
+    def increasing = migrations.endsWith(additions)
+
   def run = for
     path <- getPath
     migrations <- getMigrations(path)
+
+    duplicates = migrations
+      // group by the version of the migration
+      .groupBy(_.fileName.toString.split('_').lift(0))
+      .flatMap { // report paths with duplicated versions
+        case (_, paths) if paths.sizeIs > 1 => paths
+        case _                              => Nil
+      }
+    _ <- IO.raiseWhen(duplicates.nonEmpty) {
+      new RuntimeException(
+        s"Migrations have duplicated versions:\n${duplicates.mkString("\n")}"
+      )
+    }
+
     additions <- getAdditions(path)
     _ <- IO.raiseWhen(!migrations.endsWith(additions)) {
       new RuntimeException(
         s"Added migrations are not strictly increasing:\n${additions.mkString("\n")}"
       )
     }
+
     _ <-
       if additions.nonEmpty then
         IO.println(
