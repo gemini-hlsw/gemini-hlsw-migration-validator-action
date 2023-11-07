@@ -23,6 +23,9 @@ object index extends IOApp.Simple:
   def getAdditions(path: Path) =
     Stream
       .resource(
+        // HEAD is the (simulated) merge commit i.e. the result of merging this PR branch into the target branch
+        // HEAD^1 is the first parent of this merge commit i.e. the tip of target branch
+        // This command lists changes to migration files when comparing HEAD to HEAD^1 i.e. the changes introduced by this PR
         ProcessBuilder(
           "git",
           "diff-tree",
@@ -30,6 +33,7 @@ object index extends IOApp.Simple:
           "--name-status",
           "-m",
           "-r",
+          "HEAD^1",
           "HEAD",
           path.toString
         ).spawn[IO]
@@ -50,12 +54,27 @@ object index extends IOApp.Simple:
   def run = for
     path <- getPath
     migrations <- getMigrations(path)
+
+    duplicates = migrations
+      // group by the version of the migration
+      .groupBy(_.fileName.toString.split('_').lift(0))
+      .flatMap { // report paths with duplicated versions
+        case (_, paths) if paths.sizeIs > 1 => paths
+        case _                              => Nil
+      }
+    _ <- IO.raiseWhen(duplicates.nonEmpty) {
+      new RuntimeException(
+        s"Migrations have duplicated versions:\n${duplicates.mkString("\n")}"
+      )
+    }
+
     additions <- getAdditions(path)
     _ <- IO.raiseWhen(!migrations.endsWith(additions)) {
       new RuntimeException(
         s"Added migrations are not strictly increasing:\n${additions.mkString("\n")}"
       )
     }
+
     _ <-
       if additions.nonEmpty then
         IO.println(
