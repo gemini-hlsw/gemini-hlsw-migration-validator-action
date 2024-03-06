@@ -1,5 +1,5 @@
 //> using platform js
-//> using toolkit typelevel:0.1.17
+//> using toolkit typelevel:0.1.23
 //> using jsModuleKind common
 
 import cats.Order.catsKernelOrderingForOrder
